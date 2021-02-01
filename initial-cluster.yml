@@ -1,0 +1,13 @@
+- name : Initial Cluster
+  hosts: localhost
+  tasks:
+    - include_tasks: create-instance.yml
+      vars:
+        gcp_project: rugged-courier-303512
+        gcp_cred_kind: serviceaccount
+        gcp_cred_file: ansible.json
+        zone: "us-central1-a"
+        region: "us-central1"
+      loop:
+        - vm-1
+        - vm-2
