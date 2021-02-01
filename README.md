@@ -31,4 +31,8 @@ service_account_file: ansible.json
 ```
 Executing `ansible-inventory --list -i inventory.gcp.yml` will create a list of GCP instances that are ready to be configured using Ansible.
 
-#### Create virtual machine using ansible
+#### Initial kurbenetes
+Issue the following command to initial the cluster . Replace the env parameter as needed.
+```
+ansible-playbook initial-cluster.yml -e "env=test"
+```
