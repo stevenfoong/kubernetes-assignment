@@ -3,7 +3,7 @@
   tasks:
     - include_tasks: create-instance.yml
       vars:
-        gcp_project: rugged-courier-303512
+        gcp_project: <project-id>
         gcp_cred_kind: serviceaccount
         gcp_cred_file: ansible.json
         zone: "us-central1-a"
