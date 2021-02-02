@@ -8,6 +8,13 @@ This is a documentation for one of my interview technical assignment.
 sudo dnf install ansible -y
 pip install requests google-auth
 ```
+### Disable ssh host key checking
+Need to disable ssh host key checking for automation you need to enable it first by specifying the following in the `/etc/ansible/ansible.cfg` file:
+```
+[inventory]
+host_key_checking = False
+```
+
 To work with the GCP modules, you’ll first need to get some credentials in the JSON format:
 1. [Create a Service Account](https://cloud.google.com/iam/docs/creating-managing-service-accounts)
 2. [Grant access](https://cloud.google.com/iam/docs/granting-changing-revoking-access)
