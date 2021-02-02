@@ -42,8 +42,17 @@ service_account_file: ansible.json
 ```
 Executing `ansible-inventory --list -i inventory.gcp.yml` will create a list of GCP instances that are ready to be configured using Ansible.
 
-#### Initial kurbenetes
+#### Initial nodes
 Issue the following command to initial the cluster . Replace the env parameter as needed.
 ```
 ansible-playbook --key-file "key" --user ansible --ssh-common-args='-o StrictHostKeyChecking=no' -e "env=test" initial-cluster.yml
+```
+
+
+#### Initial kurbenetes
+```
+git clone https://github.com/kubernetes-incubator/kubespray.git
+cd kubespray
+pip install -r requirements.txt
+pip3 install -r contrib/inventory_builder/requirements.txt
 ```
