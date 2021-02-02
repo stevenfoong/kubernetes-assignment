@@ -6,7 +6,7 @@
         gcp_project: <project-id>
         gcp_cred_kind: serviceaccount
         gcp_cred_file: ansible.json
-        credentials_file: key.pub
+        pub_key: "{{ lookup('file','key.pub')  }}"
         zone: "us-central1-a"
         region: "us-central1"
       loop:
