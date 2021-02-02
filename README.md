@@ -3,6 +3,11 @@ This is a documentation for one of my interview technical assignment.
 
 ## Prepare the workstation.
 
+### Generate ssh key
+```
+ssh-keygen -f key
+```
+
 ### Install ansible and GCP (Google Cloud Platform) module
 ```
 sudo dnf install ansible -y
@@ -35,5 +40,5 @@ Executing `ansible-inventory --list -i inventory.gcp.yml` will create a list of 
 #### Initial kurbenetes
 Issue the following command to initial the cluster . Replace the env parameter as needed.
 ```
-ansible-playbook initial-cluster.yml -e "env=test"
+ansible-playbook --key-file "key" --user ansible --ssh-common-args='-o StrictHostKeyChecking=no' -e "env=test" initial-cluster.yml
 ```
