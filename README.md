@@ -8,6 +8,11 @@ This is a documentation for one of my interview technical assignment.
 ssh-keygen -f key
 ```
 
+### Install Git
+```
+sudo dnf install git -y
+```
+
 ### Install ansible and GCP (Google Cloud Platform) module
 ```
 sudo dnf install ansible -y
