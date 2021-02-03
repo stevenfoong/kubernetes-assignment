@@ -63,6 +63,16 @@ pip install -r requirements.txt
 pip3 install -r contrib/inventory_builder/requirements.txt
 ```
 
+Create storage class
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: local-storage
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: WaitForFirstConsumer
+```
+
 
 To show all the running pods
 ```
