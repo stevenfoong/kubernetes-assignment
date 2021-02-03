@@ -65,7 +65,8 @@ cp -rfp inventory/sample inventory/prod
 declare -a IPS=(10.128.0.17 10.128.0.18 10.128.0.19)
 CONFIG_FILE=inventory/prod/hosts.yml python3 contrib/inventory_builder/inventory.py ${IPS[@]}
 vim inventory/prod/hosts.yml
-nsible-playbook --key-file "key" --user ansible --ssh-common-args='-o StrictHostKeyChecking=no' -i inventory/prod/hosts.yml --become --become-user=root cluster.yml
+ansible-playbook --key-file "key" --user ansible --ssh-common-args='-o StrictHostKeyChecking=no' -i inventory/prod/hosts.yml --become --become-user=root cluster.yml
+scp -r ansible@MASTER_HOST_IP:/etc/kubernetes/admin.conf ~/.kube/config 
 ```
 
 Create storage class
