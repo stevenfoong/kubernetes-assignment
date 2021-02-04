@@ -1,7 +1,7 @@
    - name: create a disk for {{ item }}
      gcp_compute_disk:
-         name: "{{ item }}-disk"
-         size_gb: 20
+         name: "{{ item }}-disk-{{ env }}"
+         size_gb: 50
          source_image: 'projects/centos-cloud/global/images/family/centos-7'
          zone: "{{ zone }}"
          project: "{{ gcp_project }}"
@@ -11,10 +11,11 @@
            - https://www.googleapis.com/auth/compute
          state: present
      register: disk
+     become: no
 
    - name: create an IP address for {{ item }}
      gcp_compute_address:
-         name: '{{ item }}-address'
+         name: '{{ item }}-address-{{ env }}'
          region: "{{ region }}"
          project: "{{ gcp_project }}"
          auth_kind: "{{ gcp_cred_kind }}"
@@ -23,13 +24,14 @@
            - https://www.googleapis.com/auth/compute
          state: present
      register: address
+     become: no
 
    - name: create an instance name {{ item }}
      gcp_compute_instance:
          labels:
            environment: "{{ env }}"
          state: present
-         name: "{{ item }}"
+         name: "{{ item }}-{{ env }}"
          machine_type: n1-standard-1
          disks:
            - auto_delete: true
@@ -41,11 +43,26 @@
                  - name: 'External NAT'
                    nat_ip: "{{ address }}"
                    type: 'ONE_TO_ONE_NAT'
+         can_ip_forward: yes
          zone: "{{ zone }}"
          project: "{{ gcp_project }}"
          auth_kind: "{{ gcp_cred_kind }}"
          service_account_file: "{{ gcp_cred_file }}"
-         metadata:
+         metadata: 
            ssh-keys: "ansible:{{ pub_key }}"
          scopes:
            - https://www.googleapis.com/auth/compute
+     become: no
+
+   - name: wait for SSH to come up
+     wait_for: 
+       host: "{{ address.address }}"
+       port: 22
+       delay: 10
+       timeout: 60
+     become: no
+
+   - name: add host to groupname
+     add_host: 
+       name: "{{ address.address }}"
+       group: "{{ groupname  }}"
