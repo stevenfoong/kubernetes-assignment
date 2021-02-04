@@ -68,3 +68,42 @@ Now we will copy over the kubeconfig file:
 ```
 scp $USERNAME@$IP_CONTROLLER_0:/etc/kubernetes/admin.conf kubespray-do.conf
 ```
+
+Change the server ip address in kubespray-do.conf to public ip address.
+
+Example
+```
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority-data: XXX
+    server: https://35.205.205.80:6443
+  name: cluster.local
+...
+```
+
+Now, we load the configuration for kubectl:
+```
+export KUBECONFIG=$PWD/kubespray-do.conf
+```
+We should be all set to communicate with our cluster from our local workstation:
+```
+kubectl get nodes
+```
+Output
+```
+NAME           STATUS   ROLES                  AGE   VERSION
+vm-01          Ready    control-plane,master   47m   v1.20.2
+vm-02          Ready    control-plane,master   46m   v1.20.2
+vm-03          Ready    <none>                 45m   v1.20.2
+```
+
+You can refer to the **SmokeTests.md** to test out the k8s installation
+
+#### Setup nginx
+
+#### Deploy Workpress
+
+#### Test out workpress installation
+
+#### Test K8S load balance and HA
