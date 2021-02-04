@@ -3,6 +3,11 @@ This is a documentation for one of my interview technical assignment.
 
 ## Prepare the workstation.
 
+```
+wget https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-33.noarch.rpm
+sudo rpm -ivh rpmfusion-free-release-33.noarch.rpm
+```
+
 ### Install kubectl
 ```
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
@@ -31,7 +36,9 @@ To work with the GCP modules, you’ll first need to get some credentials in the
 3. [Download JSON credentials](https://cloud.google.com/iam/docs/creating-managing-service-account-keys)
 
 ### Enable GCE Dynamic Inventory
-First, [Enable **Compute Engine API** at the GCP for the project](https://cloud.google.com/endpoints/docs/openapi/enable-api)
+First, [Enable **Compute Engine API** at the GCP for the project](https://cloud.google.com/endpoints/docs/openapi/enable-api) 
+
+At the same time enable  enable **Cloud SQL Admin API** .
 
 To be able to use this GCE dynamic inventory plugin, you need to enable it first by specifying the following in the `/etc/ansible/ansible.cfg` file:
 ```
