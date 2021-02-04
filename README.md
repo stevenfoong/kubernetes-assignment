@@ -58,7 +58,7 @@ Executing `ansible-inventory --list -i inventory.gcp.yml` will create a list of 
 #### Provision nodes
 Issue the following command to initial the cluster . Replace the env parameter as needed.
 ```
-ansible-playbook --key-file "key" --user ansible --ssh-common-args='-o StrictHostKeyChecking=no' -e "env=test" initial-cluster.yml
+ansible-playbook --key-file "key" --user ansible --ssh-common-args='-o StrictHostKeyChecking=no' --become --become-user=root -e "env=take5" initial-cluster.yml
 ```
 
 
