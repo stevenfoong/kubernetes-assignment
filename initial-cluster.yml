@@ -1,26 +1,84 @@
 - name : Initial k8s node instance
   hosts: localhost
+  gather_facts: no
   vars:
-    gcp_project: <google-project-id>
+    gcp_project: <project-id>
     gcp_cred_kind: serviceaccount
     gcp_cred_file: ansible.json
     pub_key: "{{ lookup('file','key.pub')  }}"
     zone: "us-central1-a"
-    region: "us-central1"
+    region: "us-central1"    
   tasks:
     - include_tasks: create-instance.yml
+      vars:
+        groupname: "k8s"
       loop:
-        - vm-1
-        - vm-2
-        - vm-3
+        - vm-01
+        - vm-02
+        - vm-03
+
+    - include_tasks: create-db.yml
+      vars:
+        item: "db-01"
+
+    - include_tasks: create-instance.yml
+      vars:
+        item: "nginx-01"
+        groupname: "nginx"
+
+- name: Install docker service into nginx
+  hosts: nginx
+  gather_facts: no
+  tasks:
+
+    - name: Remove docker if installed from CentOS repo
+      yum:
+        name: ['docker', 'docker-client', 'docker-client-latest', 'docker-common', 'docker-latest', 'docker-latest-logrotate', 'docker-logrotate', 'docker-engine']
+        state: removed
+
+    - name: Install yum utils
+      yum:
+        name: ['yum-utils','lvm2','device-mapper-persistent-data']
+        state: latest
+
+    - name: Add Dokcer repo
+      get_url:
+        url: https://download.docker.com/linux/centos/docker-ce.repo
+        dest: /etc/yum.repos.d/docer-ce.repo
+      become: yes
+
+    - name: Enable Docker Edge repo
+      ini_file:
+        dest: /etc/yum.repos.d/docker-ce.repo
+        section: 'docker-ce-edge'
+        option: enabled
+        value: 0
+      become: yes
+
+    - name: Enable Docker Test repo
+      ini_file:
+        dest: /etc/yum.repos.d/docker-ce.repo
+        section: 'docker-ce-test'
+        option: enabled
+        value: 0
+      become: yes
+
+    - name: Install Docker
+      package:
+        name: docker-ce
+        state: latest
+      become: yes
+
+    - name: Start Docker service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+      become: yes
+
 - name: Ping new instances
-  hosts: new_instances
+  hosts: k8s
   gather_facts: no
   tasks:
     - name: Ping
       ping:
-
-- name: Initial DB instance
-  hosts: localhost
-  tasks:
-    - include_tasks: create-db.yml
