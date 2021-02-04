@@ -1,48 +1,40 @@
 # Kubernetes Assignment
 This is a documentation for one of my interview technical assignment.
 
-## Download all the files from the github
+### Download all the files from the github
 ```
 git clone https://github.com/stevenfoong/kubernetes-assignment.git
 ```
 
-## Exclude the prepare script to prepare the workstation
+### Execute the prepare script to prepare the workstation
 ```
 cd kubernetes-assignment
 chmod +x prepare.sh
 sudo ./prepare.sh
 ```
 
+## Retrieve GCP credential
 
 To work with the GCP modules, you’ll first need to get some credentials in the JSON format:
 1. [Create a Service Account](https://cloud.google.com/iam/docs/creating-managing-service-accounts)
 2. [Grant access](https://cloud.google.com/iam/docs/granting-changing-revoking-access)
 3. [Download JSON credentials](https://cloud.google.com/iam/docs/creating-managing-service-account-keys)
 
-### Enable GCE Dynamic Inventory
-First, [Enable **Compute Engine API** at the GCP for the project](https://cloud.google.com/endpoints/docs/openapi/enable-api) 
+### Enable GCP API
+Enable [**Compute Engine API** and **Cloud SQL Admin API** at the GCP for the project](https://cloud.google.com/endpoints/docs/openapi/enable-api) 
 
-At the same time enable  enable **Cloud SQL Admin API** .
+### Enable GCP Module at Ansible
 
-To be able to use this GCE dynamic inventory plugin, you need to enable it first by specifying the following in the `/etc/ansible/ansible.cfg` file:
+In order to be able to use GCP module in ansiblle, you will need to enable it first by specifying the following in the `/etc/ansible/ansible.cfg` file:
 ```
 [inventory]
 enable_plugins = gcp_compute
 ```
-Create the inventory.gcp.yml with the following content
-```
-plugin: gcp_compute
-projects:
-  - <gcp-project-id>
-auth_kind: serviceaccount
-service_account_file: ansible.json
-```
-Executing `ansible-inventory --list -i inventory.gcp.yml` will create a list of GCP instances that are ready to be configured using Ansible.
 
 #### Provision nodes
-Issue the following command to initial the cluster . Replace the env parameter as needed.
+Issue the following command to provision the nodes . Replace the **env** parameter as needed.
 ```
-ansible-playbook --key-file "key" --user ansible --ssh-common-args='-o StrictHostKeyChecking=no' --become --become-user=root -e "env=take5" initial-cluster.yml
+ansible-playbook --key-file "key" --user ansible --ssh-common-args='-o StrictHostKeyChecking=no' --become --become-user=root -e "env=prod" initial-cluster.yml
 ```
 
 
@@ -53,28 +45,26 @@ cd kubespray
 pip install -r requirements.txt
 pip3 install -r contrib/inventory_builder/requirements.txt
 cp -rfp inventory/sample inventory/prod
-declare -a IPS=(10.128.0.17 10.128.0.18 10.128.0.19)
+declare -a IPS=(10.128.0.17 10.128.0.18 10.128.0.19) # you need to replace the list of IP with the private ip of the vm nodes
 CONFIG_FILE=inventory/prod/hosts.yml python3 contrib/inventory_builder/inventory.py ${IPS[@]}
 vim inventory/prod/hosts.yml
 ansible-playbook --key-file "key" --user ansible --ssh-common-args='-o StrictHostKeyChecking=no' -i inventory/prod/hosts.yml --become --become-user=root cluster.yml
-scp -r ansible@MASTER_HOST_IP:/etc/kubernetes/admin.conf ~/.kube/config 
+```
+**Ansible will now execute the playbook, this can take up to 20 minutes.**
+
+#### Access the kubernetes cluster
+
+First, we need to edit the permission of the kubeconfig file on one of the controller nodes:
+
+```
+ssh $USERNAME@$IP_CONTROLLER_0 **Remember to replace the USERNAME and IP_CONTROLLER**
+USERNAME=$(whoami)
+sudo chown -R $USERNAME:$USERNAME /etc/kubernetes/admin.conf
+exit
 ```
 
-Create storage class
-```
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: local-storage
-provisioner: kubernetes.io/no-provisioner
-volumeBindingMode: WaitForFirstConsumer
-```
+Now we will copy over the kubeconfig file:
 
-
-To show all the running pods
 ```
-kubectl get pods --all-namespaces -o jsonpath="{..image}" |\
-tr -s '[[:space:]]' '\n' |\
-sort |\
-uniq -c
+scp $USERNAME@$IP_CONTROLLER_0:/etc/kubernetes/admin.conf kubespray-do.conf
 ```
