@@ -1,9 +1,9 @@
-- name : Initial Cluster
+- name : Initial k8s node instance
   hosts: localhost
   tasks:
     - include_tasks: create-instance.yml
       vars:
-        gcp_project: <project-id>
+        gcp_project: rugged-courier-303512
         gcp_cred_kind: serviceaccount
         gcp_cred_file: ansible.json
         pub_key: "{{ lookup('file','key.pub')  }}"
@@ -12,3 +12,23 @@
       loop:
         - vm-1
         - vm-2
+        - vm-3
+- name: Ping new instances
+  hosts: new_instances
+  gather_facts: no
+  tasks:
+    - name: Ping
+      ping:
+
+- name: Initial DB instance
+  hosts: localhost
+  tasks:
+    - include_tasks: create-db.yml
+      vars:
+        gcp_project: rugged-courier-303512
+        gcp_cred_kind: serviceaccount
+        gcp_cred_file: ansible.json
+        pub_key: "{{ lookup('file','key.pub')  }}"
+        zone: "us-central1-a"
+        region: "us-central1"
+
