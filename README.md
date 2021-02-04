@@ -1,34 +1,18 @@
 # Kubernetes Assignment
 This is a documentation for one of my interview technical assignment.
 
-## Prepare the workstation.
-
+## Download all the files from the github
 ```
-wget https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-33.noarch.rpm
-sudo rpm -ivh rpmfusion-free-release-33.noarch.rpm
+git clone https://github.com/stevenfoong/kubernetes-assignment.git
 ```
 
-### Install kubectl
+## Exclude the prepare script to prepare the workstation
 ```
-curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
-```
-
-### Generate ssh key
-```
-ssh-keygen -f key
+cd kubernetes-assignment
+chmod +x prepare.sh
+sudo ./prepare.sh
 ```
 
-### Install Git
-```
-sudo dnf install git -y
-```
-
-### Install ansible and GCP (Google Cloud Platform) module
-```
-sudo dnf install ansible -y
-pip install requests google-auth
-```
 
 To work with the GCP modules, you’ll first need to get some credentials in the JSON format:
 1. [Create a Service Account](https://cloud.google.com/iam/docs/creating-managing-service-accounts)
