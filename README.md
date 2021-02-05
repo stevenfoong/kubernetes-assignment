@@ -94,6 +94,8 @@ clusters:
 ...
 ```
 
+Replace the line start with `certificate-authority-data` with `insecure-skip-tls-verify: true` in file `kubespray-do.conf` .
+
 Remember to open up port 6443 at the GCP console.
 
 Now, we load the configuration for kubectl:
