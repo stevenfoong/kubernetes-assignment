@@ -35,7 +35,11 @@ uniq -c
 
 
 https://github.com/IBM/Scalable-WordPress-deployment-on-Kubernetes
+
 https://kubernetes.io/docs/tutorials/stateful-application/mysql-wordpress-persistent-volume/
+
 https://kubernetes.io/docs/tasks/run-application/run-replicated-stateful-application/
+
 https://github.com/kubernetes-sigs/kubespray
+
 https://github.com/kubernetes-sigs/kubespray/blob/master/docs/setting-up-your-first-cluster.md#deployments
