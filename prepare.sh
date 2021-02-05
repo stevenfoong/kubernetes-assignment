@@ -10,8 +10,6 @@ install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 
 # Generate SSH Key
 ssh-keygen -f key
-chown $USER:$USER key
-chown $USER:$USER key.pub
 
 # Install Git
 dnf install git -y
