@@ -60,7 +60,7 @@ CONFIG_FILE=inventory/prod/hosts.yml python3 contrib/inventory_builder/inventory
 Modify `inventory/prod/hosts.yml` field `ansible_host` with the node public 
 
 ```
-ansible-playbook --key-file "key" --user ansible --ssh-common-args='-o StrictHostKeyChecking=no' -i inventory/prod/hosts.yml --become --become-user=root cluster.yml
+ansible-playbook --key-file "../key" --user ansible --ssh-common-args='-o StrictHostKeyChecking=no' -i inventory/prod/hosts.yml --become --become-user=root cluster.yml
 ```
 **Ansible will now execute the playbook, this can take up to 20 minutes.**
 
