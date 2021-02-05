@@ -172,3 +172,20 @@ Steps to configure cloudflare will not cover in document.
 Now you should be able to access the wordpress through public ip and the domain name configure at cloudflare.
 
 #### Test K8S load balance and HA
+
+Scale up the wordpress deployment
+```
+$ kubectl scale deployments/wordpress --replicas=3
+deployment "wordpress" scaled
+
+$ kubectl get deployments
+NAME        READY   UP-TO-DATE   AVAILABLE   AGE
+wordpress   2/2     2            2           4h5m
+```
+
+#### To remove K8S
+
+```
+ansible-playbook --key-file "../key" --user ansible --ssh-common-args='-o StrictHostKeyChecking=no' -i inventory/prod/hosts.yml reset.yml
+
+```
