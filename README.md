@@ -102,6 +102,21 @@ You can refer to the **SmokeTests.md** to test out the k8s installation
 
 #### Setup nginx
 
+SSH into nginx node
+```
+wget https://raw.githubusercontent.com/stevenfoong/kubernetes-assignment/main/setup_nginx.sh
+chomod +x setup_nginx.sh
+```
+
+Modify `/etc/nginx/conf.d/wordpress.conf` .
+
+Value of `server_name` and `server` need to be change accordingly.
+
+Start the Nginx container.
+```
+docker run -it -d -p 80:80 --name web-lb -v /etc/nginx/conf.d:/etc/nginx/conf.d nginx
+```
+
 #### Deploy Workpress
 
 #### Test out workpress installation
