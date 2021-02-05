@@ -47,7 +47,11 @@ pip3 install -r contrib/inventory_builder/requirements.txt
 cp -rfp inventory/sample inventory/prod
 declare -a IPS=(10.128.0.17 10.128.0.18 10.128.0.19) # you need to replace the list of IP with the private ip of the vm nodes
 CONFIG_FILE=inventory/prod/hosts.yml python3 contrib/inventory_builder/inventory.py ${IPS[@]}
-vim inventory/prod/hosts.yml
+```
+
+Modify `inventory/prod/hosts.yml` field `ansible_host` with the node public 
+
+```
 ansible-playbook --key-file "key" --user ansible --ssh-common-args='-o StrictHostKeyChecking=no' -i inventory/prod/hosts.yml --become --become-user=root cluster.yml
 ```
 **Ansible will now execute the playbook, this can take up to 20 minutes.**
@@ -101,6 +105,8 @@ vm-03          Ready    <none>                 45m   v1.20.2
 You can refer to the **SmokeTests.md** to test out the k8s installation
 
 #### Setup nginx
+
+Enable http access for the nginx instance at GCP console.
 
 SSH into nginx node
 ```
