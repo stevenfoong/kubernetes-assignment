@@ -4,7 +4,6 @@ This is a documentation for one of my interview technical assignment.
 ### Download all the files from the github
 ```
 git clone https://github.com/stevenfoong/kubernetes-assignment.git
-cd kubernetes-assignment
 ```
 
 ### Execute the prepare script to prepare the workstation
