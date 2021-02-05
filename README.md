@@ -152,8 +152,10 @@ Enable http access for the nginx instance at GCP console.
 
 SSH into nginx node
 ```
+sudo yum install wget vim -y
 wget https://raw.githubusercontent.com/stevenfoong/kubernetes-assignment/main/setup_nginx.sh
 chomod +x setup_nginx.sh
+sudo ./setup_nginx.sh
 ```
 
 Modify `/etc/nginx/conf.d/wordpress.conf` .
@@ -162,7 +164,7 @@ Value of `server_name` and `server` need to be change accordingly.
 
 Start the Nginx container.
 ```
-docker run -it -d -p 80:80 --name web-lb -v /etc/nginx/conf.d:/etc/nginx/conf.d nginx
+sudo docker run -it -d -p 80:80 --name web-lb -v /etc/nginx/conf.d:/etc/nginx/conf.d nginx
 ```
 
 #### Configure Cloudflare
