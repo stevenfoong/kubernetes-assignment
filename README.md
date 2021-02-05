@@ -3,10 +3,14 @@ This is a documentation for one of my interview technical assignment.
 
 ### Download all the files from the github
 ```
+sudo dnf install git vim -y
 git clone https://github.com/stevenfoong/kubernetes-assignment.git
 ```
 
 ### Execute the prepare script to prepare the workstation
+
+You need to press ENTER twice to skip passphrase prompt.
+
 ```
 cd kubernetes-assignment
 chmod +x prepare.sh
@@ -32,7 +36,11 @@ enable_plugins = gcp_compute
 ```
 
 #### Provision nodes
+
+Modify the value of `gcp_project` in the file `initial-cluster.yml` accordingly.
+
 Issue the following command to provision the nodes . Replace the **env** parameter as needed.
+
 ```
 ansible-playbook --key-file "key" --user ansible --ssh-common-args='-o StrictHostKeyChecking=no' --become --become-user=root -e "env=prod" initial-cluster.yml
 ```
