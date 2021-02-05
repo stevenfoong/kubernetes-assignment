@@ -17,5 +17,6 @@ server {
 upstream wordpress_upstream {
     server 10.128.0.37:30992 weight=3;
     server 10.128.0.35:30992;
-	server 10.128.0.36:30992;
+    server 10.128.0.36:30992;
+}
 endmsg
