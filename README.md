@@ -154,7 +154,7 @@ SSH into nginx node
 ```
 sudo yum install wget vim -y
 wget https://raw.githubusercontent.com/stevenfoong/kubernetes-assignment/main/setup_nginx.sh
-chomod +x setup_nginx.sh
+chmod +x setup_nginx.sh
 sudo ./setup_nginx.sh
 ```
 
