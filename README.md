@@ -104,6 +104,30 @@ vm-03          Ready    <none>                 45m   v1.20.2
 
 You can refer to the **SmokeTests.md** to test out the k8s installation
 
+#### Deploy Workpress
+
+```
+wget https://raw.githubusercontent.com/stevenfoong/kubernetes-assignment/main/wordpress-deployment.yaml
+wget https://raw.githubusercontent.com/stevenfoong/kubernetes-assignment/main/local-volumes.yaml
+```
+
+Modify value of `WORDPRESS_DB_HOST` and `WORDPRESS_DB_PASSWORD` in the file `wordpress-deployment.yaml`.
+
+Initial local volume and wordpress service
+
+```
+kubectl apply -f local-volumes.yaml
+kubectl apply -f wordpress-deployment.yaml
+```
+
+Issue command `kubectl get services` to find out the wordpress service port number
+
+```
+$ kubectl get services
+NAME              TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+wordpress         NodePort    10.233.37.62    <none>        80:30992/TCP   16h
+```
+
 #### Setup nginx
 
 Enable http access for the nginx instance at GCP console.
@@ -123,12 +147,12 @@ Start the Nginx container.
 docker run -it -d -p 80:80 --name web-lb -v /etc/nginx/conf.d:/etc/nginx/conf.d nginx
 ```
 
-#### Deploy Workpress
-
 #### Configure Cloudflare
 
 Steps to configure cloudflare will not cover in document.
 
 #### Test out workpress installation
+
+Now you should be able to access the wordpress through public ip and the domain name configure at cloudflare.
 
 #### Test K8S load balance and HA
