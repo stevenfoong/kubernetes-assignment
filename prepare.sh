@@ -18,4 +18,4 @@ dnf install git -y
 
 # Install ansible and GCP (Google CLoud Platform) module
 dnf install ansible -y
-pip install requests google-auth
+pip install --user requests google-auth
