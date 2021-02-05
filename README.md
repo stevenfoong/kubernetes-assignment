@@ -119,6 +119,10 @@ docker run -it -d -p 80:80 --name web-lb -v /etc/nginx/conf.d:/etc/nginx/conf.d 
 
 #### Deploy Workpress
 
+#### Configure Cloudflare
+
+Steps to configure cloudflare will not cover in document.
+
 #### Test out workpress installation
 
 #### Test K8S load balance and HA
