@@ -15,6 +15,8 @@ You need to press ENTER twice to skip passphrase prompt.
 cd kubernetes-assignment
 chmod +x prepare.sh
 sudo ./prepare.sh
+sudo chown $USER:$USER key
+sudo chown $USER:$USER key.pub
 ```
 
 ## Retrieve GCP credential
