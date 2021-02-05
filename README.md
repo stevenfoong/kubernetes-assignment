@@ -39,6 +39,10 @@ enable_plugins = gcp_compute
 
 Modify the value of `gcp_project` in the file `initial-cluster.yml` accordingly.
 
+By modify field `size_gb` in create-instance.yml to have larger spec instance.
+
+You can modify field `machine_type: n1-standard-1` in create-instance.yml to have a higher spec instance.
+
 Issue the following command to provision the nodes . Replace the **env** parameter as needed.
 
 ```
