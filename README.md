@@ -75,7 +75,7 @@ ansible-playbook --key-file "../key" --user ansible --ssh-common-args='-o Strict
 First, we need to edit the permission of the kubeconfig file on one of the controller nodes:
 
 ```
-ssh $USERNAME@$IP_CONTROLLER_0 **Remember to replace the USERNAME and IP_CONTROLLER**
+ssh -i ../key $USERNAME@$IP_CONTROLLER_0 **Remember to replace the USERNAME and IP_CONTROLLER**
 USERNAME=$(whoami)
 sudo chown -R $USERNAME:$USERNAME /etc/kubernetes/admin.conf
 exit
@@ -84,7 +84,7 @@ exit
 Now we will copy over the kubeconfig file:
 
 ```
-scp $USERNAME@$IP_CONTROLLER_0:/etc/kubernetes/admin.conf kubespray-do.conf
+scp ../key $USERNAME@$IP_CONTROLLER_0:/etc/kubernetes/admin.conf kubespray-do.conf
 ```
 
 Change the server ip address in kubespray-do.conf to public ip address.
