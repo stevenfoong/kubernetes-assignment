@@ -1,6 +1,6 @@
 mkdir -p /etc/nginx/conf.d
 curl https://raw.githubusercontent.com/stevenfoong/kubernetes-assignment/main/default.conf -o /etc/nginx/conf.d/default.conf
-cat > /etc/nginx.conf.d/wordpress.conf <<'endmsg'
+cat > /etc/nginx/conf.d/wordpress.conf <<'endmsg'
 server {
     listen 80;
     server_name wordpress.barehandsgame.com;
