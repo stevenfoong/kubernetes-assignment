@@ -32,7 +32,7 @@
            environment: "{{ env }}"
          state: present
          name: "{{ item }}-{{ env }}"
-         machine_type: n1-standard-1
+         machine_type: e2-standard-2
          disks:
            - auto_delete: true
              boot: true
