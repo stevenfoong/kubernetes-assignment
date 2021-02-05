@@ -94,6 +94,8 @@ clusters:
 ...
 ```
 
+Remember to open up port 6443 at the GCP console.
+
 Now, we load the configuration for kubectl:
 ```
 export KUBECONFIG=$PWD/kubespray-do.conf
